@@ -1,5 +1,4 @@
 /*
-
     RANGE MAX QUERY 
 
     Given a big array f[ 0 N-1 ] , we get many queries of the form 
