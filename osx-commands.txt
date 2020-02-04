@@ -1,0 +1,2 @@
+g++ -o submission submission.cpp 
+./submission < input.txt > output.txt 
