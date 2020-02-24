@@ -15,7 +15,6 @@ typedef pair<int,int> ii;
     https://codeforces.com/problemset/problem/978/C
     
     Finding lowerbound
-
 */
 ll n, m ;
 
