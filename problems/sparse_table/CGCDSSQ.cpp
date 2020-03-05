@@ -85,7 +85,7 @@ int main()
 
     int q, x;
     cin >> q;
-    cout << "Solution" << endl;
+
     FOR(i,0,q)
     {
         cin >> x;
