@@ -44,7 +44,7 @@ void preprocess(int N, int array, function f)
 }
 */
 
-void sum_preprocess(int N, int array)
+void sum_preprocess(int N, int array[])
 {
     // Pre-computing the 
     for (int i = 0; i < N; i++) st[i][0] = array[i];
@@ -70,9 +70,9 @@ long long sum_query(int L, int R)
     }
 }
 
-void min_preprocess(int N, int array)
+void min_preprocess(int N, int array[])
 {
-    // Pre-computing the 
+    // Pre-computing the array via DP
     for (int i = 0; i < N; i++) st[i][0] = array[i];
 
     for (int j = 1; j <= K; j++)
