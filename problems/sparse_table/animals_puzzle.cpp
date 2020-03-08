@@ -22,12 +22,11 @@ typedef pair<int,int> ii;
 
 */
 
-const int MAXN = 1e5 + 5; 
-const int K = 20; 
+const int MAXN = 1e3 + 1; 
+const int K = 10; 
 
 int st[MAXN][MAXN][K][K];
 int LOG[MAXN+1];
-int a[MAXN][MAXN];
 int dp[MAXN+1][MAXN+1];
 
 int n, m;
@@ -35,63 +34,67 @@ int n, m;
 void max_preprocess()
 {
     LOG[1] = 0; for (int i = 2; i <= MAXN; i++) LOG[i] = LOG[i/2] + 1;
-
+    
+    int aux;
     for(int i = 0; i < n; i++ )
     {
         for(int j = 0; j < m; j++)
         {
-            if ( a[i][j] == 1 )
+            scanf("%d", &aux);
+            if ( aux == 1 )
             {
                 dp[i+1][j+1] = min( dp[i][j], min( dp[i+1][j], dp[i][j+1]) ) + 1;
                 st[i+1][j+1][0][0] = dp[i+1][j+1];
             }
         }
     }
-        
-    for( int l = 0; l < m; l++)
-        for (int j = 1; j <= K; j++)
-            for (int i = 1; i + (1 << j) - 1 <= n; i++)
-                st[l][i][j] = max(st[l][i][j-1] , st[l][i + (1 << (j - 1))][j - 1] );
+
+    // Solve the 1D-RMQ instance for each row
+    for(int i = 1; i <= n; i++)
+        for ( int j = 1; j <= K ; j++)
+            for (int k = 1; k + (1<<j) - 1 <= m; k++)
+                st[i][k][0][j] = max(st[i][k][0][j-1] , st[i][k + (1 << (j - 1))][0][j-1] );
+    
+    // Complete the rest of the table
+    for(int i = 1; i <= K; i++)
+        for(int k = 1; k + (1<<i) - 1 <= n; k++)
+            for (int j = 0; j <= K; j++)
+                for(int l = 1; l + (1<<j) - 1 <= m; l++)
+                    st[k][l][i][j] = max( st[k][l][i-1][j] , st[k + (1 << (i-1))][l][i-1][j] );
 }
 
-int max_query(int l, int L, int R)
+int max_query(int x1, int y1, int x2, int y2)
 {
-    if (L > R) return 0;
-    int j = LOG[R - L + 1];
-    return max(st[l][L][j], st[l][R - (1 << j) + 1][j]);
+    if ( x2 < x1 || y2 < y1 ) return 0;
+    int i = LOG[x2 - x1 + 1];
+    int j = LOG[y2 - y1 + 1];
+    return max( max(st[x1][y1][i][j], st[x2 - (1 << i) + 1][y1][i][j] ),
+                max(st[x2 - (1 << i) + 1][y2 - (1<<j) + 1][i][j], st[x1][y2 - (1<<j) + 1][i][j]) 
+            );
 }
-
-long long cost(int m, int L, int R)
-{
-    long long ans = 0;
-    FOR(i,0,m) ans += max_query(i,L,R);
-    return ans;
-}
-
-int binary_search(int start, int lo, int hi, int k, int m)
-{
-    int best = 0;
-    while ( lo <= hi )
-    {
-        int mid = (hi-lo)/2 + lo;
-        if ( cost(m, start, mid) <= k ) best = mid, lo = mid + 1;
-        else hi = mid - 1;
-    }
-    return best;
-}
-
 int main()
 {
-    FIN;
-    cin >> n >> m;
-    
-    for(int i = 0; i < n; i++)
-        for(int j = 0; j < m; j++)
-            cin >> a[i][j];
-
-    
-
+    scanf("%d%d",&n,&m);
     max_preprocess();
 
+    int q; scanf("%d",&q);
+    int x1, x2, y1, y2;
+    for ( int t = 0; t < q; t++)
+    {
+        scanf("%d%d%d%d",&x1,&y1,&x2,&y2);
+        int lo = 0;
+        int hi = max(n,m)+1;
+        int best = 0;
+        int mid;
+
+        while(lo <= hi)
+        {
+            mid = (hi-lo)/2 + lo;
+            if ( max_query(x1+mid-1, y1+mid-1, x2, y2) >= mid ) best = mid, lo = mid + 1;
+            else hi = mid - 1;
+        }
+
+        printf("%d\n", best);
+    }
     return 0;
 }
