@@ -17,6 +17,9 @@
 
 */
 
+#include <bits/stdc++.h> 
+using namespace std;
+
 const int MAXN = 1e5 + 5; // Maximum size of array
 const int K = 25; // K >= ⌊log_2(MAXN)⌋+1 . In practice for MAXN <= 1e7, K = 25 is fine.
 
