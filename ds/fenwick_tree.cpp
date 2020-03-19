@@ -1,3 +1,25 @@
+/*
+    Fenwick Tree ( Binary Indexed Tree )
+
+    Let, f be some reversible(!) function and A be an array of integers of length N.
+
+    Fenwick tree is a data structure which:
+
+    calculates the value of function f in the given range [l,r] (i.e. f(Al,Al+1,…,Ar)) in O(logn) time;
+    updates the value of an element of A in O(logn) time;
+    requires O(N) memory, or in other words, exactly the same memory required for A;
+    is easy to use and code, especially, in the case of multidimensional arrays.
+
+    Observations: 
+        - its behavior ranges between a prefix sum and an array.
+        - it can be extended for range updates and range queries
+
+    Based on blogs
+    - https://cp-algorithms.com/data_structures/fenwick.html
+    - https://www.topcoder.com/community/competitive-programming/tutorials/binary-indexed-trees/
+
+*/
+
 #include <bits/stdc++.h> 
 using namespace std;
 
@@ -5,7 +27,6 @@ vector<int> bit;  // binary indexed tree
 int N = 10 ; // N 
 
 /* 
-
 ########    Point Update & Range Query
 
 int sum_query(int idx) 
