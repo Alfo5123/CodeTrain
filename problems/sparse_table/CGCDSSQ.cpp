@@ -15,7 +15,6 @@ typedef pair<int,int> ii;
     https://codeforces.com/contest/475/problem/D
 
     Queries to count the number of pairs l,r such that gcd(a_l, a_l+1, ..., a_r) = x
-
 */
 
 const int MAXN = 1e5 + 5; 
