@@ -1,3 +1,13 @@
+/*
+    Problem:
+    https://codeforces.com/contest/356/problem/A
+    
+    Implement a segment tree approach to obtain the winner
+    of each interval
+                               
+*/
+
+
 #include<bits/stdc++.h>
 using namespace std;
 
